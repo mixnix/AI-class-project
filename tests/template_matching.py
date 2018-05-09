@@ -2,6 +2,14 @@ import cv2
 import numpy as np
 from PIL import Image
 
+def displayImage(imageArray):
+    img = Image.fromarray(imageArray)
+    img.show()
+
+def displayMany(*arg):
+    for argument in arg:
+        displayImage(argument)
+
 if __name__ == '__main__':
     img_rgb = cv2.imread('../res/initial_screen.png')
     img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
@@ -10,11 +18,4 @@ if __name__ == '__main__':
     w, h = template.shape[::-1]
 
     #Displays images
-    img = Image.fromarray(img_rgb, 'RGB')
-    img.show()
-
-    img2 = Image.fromarray(img_gray)
-    img2.show()
-
-    img3 = Image.fromarray(template)
-    img3.show()
+    displayMany(img_rgb, img_gray, template)
