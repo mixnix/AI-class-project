@@ -23,8 +23,8 @@ def long_slice(image_path, out_name, outdir, slice_size):
         working_slice = img.crop(bbox)
         upper += slice_size
         #save the slice
-        working_slice.save(os.path.join(outdir, "slice_" + out_name + "_" + str(count)+".png"))
+        working_slice.save(os.path.join(outdir, "../res/vertially_splitted_img/slice_" + out_name + "_" + str(count)+".png"))
         count +=1
 
 if __name__ == '__main__':
-    long_slice("../res/initial_screen.png","longcat", os.getcwd(), 300)
+    long_slice("../res/initial_screen.png","dd", os.getcwd(), 300)
