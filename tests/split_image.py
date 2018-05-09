@@ -1,4 +1,4 @@
-from __future__ import division
+
 from PIL import Image
 import math
 import os
@@ -29,19 +29,18 @@ def long_slice(image_path, out_name, outdir, slice_size):
 # slices image in height and width, it will have slicesX slices in width and slicesY slices in height
 def slice(image_path, out_name, outdir, slicesX, slicesY):
     img = Image.open(image_path)
-    width, height = img.size
-    left = 0
+    left = 259
 
     #constants that in future should be generated automatically by detecting edges and calculating
-    slice_sizeX = 25
-    slice_sizeY = 25
+    slice_sizeX = 50
+    slice_sizeY = 50
 
     countX = 1
     for X in range(slicesX):
         right = left + slice_sizeX
 
 
-        upper = 0
+        upper = 30
         countY = 1
         for Y in range(slicesY):
             lower = upper + slice_sizeY
