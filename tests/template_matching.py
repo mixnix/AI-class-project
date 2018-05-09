@@ -18,4 +18,15 @@ if __name__ == '__main__':
     w, h = template.shape[::-1]
 
     #Displays images
-    displayMany(img_rgb, img_gray, template)
+    #displayMany(img_rgb, img_gray, template)
+
+
+    res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
+    threshold = 0.8
+    loc = np.where(res >= threshold)
+
+    for pt in zip(*loc[::-1]):
+        cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0, 255, 255), 2)
+
+    cv2.imshow('Detected', img_rgb)
+    cv2.imwrite('detecting_template.jpg', img_rgb)
