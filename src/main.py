@@ -45,12 +45,16 @@ def comparePictures(image1, image2):
     img2_gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 
     res = cv2.matchTemplate(img1_gray, img2_gray, cv2.TM_CCOEFF_NORMED)
-    threshold = 0.9
+    threshold = 0.4
     loc = np.where(res >= threshold)
-    if(len(loc) > 0):
-        return True
-    else:
-        return False
+
+    #print("Threshold tak jakby: " + str(res))
+    for pt in zip(*loc[::-1]):
+        #print("p[0] " + str(pt[0]) + " pt[1] " + str(pt[1]))
+        if(pt[0] == pt[1]):
+            return True
+    #print("dlugosc: " + str(len(loc)))
+    return False
 
 
 if __name__ == '__main__':
@@ -64,7 +68,7 @@ if __name__ == '__main__':
     list_of_images = slice(pic)
 
     #show first picture
-    list_of_images[6][5].show()  #goblin 2
+    list_of_images[14][14].show()  #goblin 2
 
     #prepare second picture
     img_with_goblin2 = Image.open("../res/2.png")
@@ -72,8 +76,10 @@ if __name__ == '__main__':
     #show sesond picture
     list_with_goblin2[1][10].show()
 
-
-    image1 = np.array(list_of_images[6][5])
+    image1 = np.array(list_of_images[14][14])
     image2 = np.array(list_with_goblin2[1][10])
 
-    print(comparePictures(image1,image2))
+    #result of comparison
+    print("Are pictures the same?: " + str(comparePictures(image1,image2)))
+
+
