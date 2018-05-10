@@ -1,6 +1,8 @@
 import pyautogui
 import time
 from PIL import Image
+import cv2
+import numpy as np
 
 def slice(img):
     slicesX = 20
@@ -38,6 +40,18 @@ def slice(img):
         list_to_be_returned.append(temp_list)
     return list_to_be_returned
 
+def comparePictures(image1, image2):
+    img1_gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+    img2_gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+
+    res = cv2.matchTemplate(img1_gray, img2_gray, cv2.TM_CCOEFF_NORMED)
+    threshold = 0.9
+    loc = np.where(res >= threshold)
+    if(len(loc) > 0):
+        return True
+    else:
+        return False
+
 
 if __name__ == '__main__':
     time.sleep(2)
@@ -57,3 +71,9 @@ if __name__ == '__main__':
     list_with_goblin2 = slice(img_with_goblin2)
     #show sesond picture
     list_with_goblin2[1][10].show()
+
+
+    image1 = np.array(list_of_images[6][5])
+    image2 = np.array(list_with_goblin2[1][10])
+
+    print(comparePictures(image1,image2))
