@@ -47,4 +47,8 @@ if __name__ == '__main__':
 
     list_of_images = slice(pic,20,20)
 
-    list_of_images[10][10].show()
+    list_of_images[6][5].show()  #goblin 2
+
+    img_with_goblin2 = Image.open("../res/2.png")
+    list_with_goblin2 = slice(img_with_goblin2,20,20)
+    list_with_goblin2[1][10].show()
