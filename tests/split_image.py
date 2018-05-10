@@ -50,7 +50,7 @@ def slice(image_path, out_name, outdir, slicesX, slicesY):
             upper += slice_sizeY
             working_slice.save(os.path.join(outdir, "../res/splitted_img/slice_" +
                                             out_name + "_X_" + str(countX) + "_Y_" + str(countY) + ".png"))
-            upper += slice_sizeY
+
             countY += 1
 
         left += slice_sizeX
