@@ -2,7 +2,9 @@ import pyautogui
 import time
 from PIL import Image
 
-def slice(img, slicesX, slicesY):
+def slice(img):
+    slicesX = 20
+    slicesY = 20
 
     left = 259
 
@@ -45,10 +47,13 @@ if __name__ == '__main__':
     #Show the screenshot
     #pic.show()
 
-    list_of_images = slice(pic,20,20)
+    list_of_images = slice(pic)
 
+    #show first picture
     list_of_images[6][5].show()  #goblin 2
 
+    #prepare second picture
     img_with_goblin2 = Image.open("../res/2.png")
-    list_with_goblin2 = slice(img_with_goblin2,20,20)
+    list_with_goblin2 = slice(img_with_goblin2)
+    #show sesond picture
     list_with_goblin2[1][10].show()
