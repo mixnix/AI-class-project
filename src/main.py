@@ -98,17 +98,31 @@ class Undiscovered(Field):
     def __str__(self):
         return "undiscovered field"
 
+def createTile(name,x,y):
+    tileProducer = {
+        #todo: are those tiles, gonna be the same object??? with the same adress
+        "undiscovered" : Undiscovered(x,y),
+    }
+    return tileProducer.get(name, DifferentField(x,y))
+
+
 
 def classifyTile(tileImg):
     path = "../res/readyTemplates/"
 
 
+    #I can make this core prettier by using factory design pattern, then I can streamline
+    #differentiating between tiles
+
     #other category
     otherPath = path + "Other/"
     #undiscovered tile
-    undiscovered = Image.open(otherPath + "undiscovered.png")
-    if(comparePictures(undiscovered, tileImg)):
-        return Undiscovered(1,1)
+    otherTileNames = ["undiscovered", "altar", "empty", "gold",
+                        "hero", "hidden_monster", "shop", "wall"]
+    for name in otherTileNames:
+        templateImage = Image.open(otherPath + name + ".png")
+        if comparePictures(templateImage, tileImg):
+            return createTile(name,1,1)
 
 
 
