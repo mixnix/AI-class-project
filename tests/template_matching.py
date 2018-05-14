@@ -10,7 +10,36 @@ def displayMany(*arg):
     for argument in arg:
         displayImage(argument)
 
-if __name__ == '__main__':
+def testMonsterLevelDetection(monsterPath):
+    detection_threshold = 0.95
+
+    monsterImgArray = []
+    for i in range(1,11):
+        img_rgb = cv2.imread(monsterPath + str(i) + '.png')
+        img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
+        monsterImgArray.append(img_gray)
+
+    levelImgArray = []
+    for i in range(1,11):
+        template = cv2.imread(monsterPath + "nr" + str(i) + '.png', 0)
+        levelImgArray.append(template)
+        w, h = template.shape[::-1]  #todo: bad coding practice, it doesnt neeed to be assigned many times
+
+    monsterLevel = 1
+    templateLevel = 1
+    for monsterImg in monsterImgArray:
+        print("\nPotwor o levelu: " + str(monsterLevel))
+        for templateLevelImg in  levelImgArray:
+            print("Template o levelu: " + str(templateLevel))
+            res = cv2.matchTemplate(monsterImg, templateLevelImg, cv2.TM_CCOEFF_NORMED)
+            loc = np.where(res >= detection_threshold)
+            for pt in zip(*loc[::-1]):
+                print("pasuja do siebie")
+            templateLevel += 1
+        monsterLevel += 1
+        templateLevel = 1
+
+def matchTemplate():
     img_rgb = cv2.imread('../res/initial_screen.png')
     img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
 
@@ -30,3 +59,6 @@ if __name__ == '__main__':
 
     cv2.imshow('Detected', img_rgb)
     cv2.imwrite('detecting_template.jpg', img_rgb)
+
+if __name__ == '__main__':
+    testMonsterLevelDetection("../res/readyTemplates/Monsters/Goblin/")
