@@ -52,7 +52,7 @@ def comparePictures(image1, image2):
 
     #print("Threshold tak jakby: " + str(res))
     for pt in zip(*loc[::-1]):
-        print("p[0] " + str(pt[0]) + " pt[1] " + str(pt[1]))
+        #print("p[0] " + str(pt[0]) + " pt[1] " + str(pt[1]))
         if(pt[0] == pt[1]):
             return True
     #print("dlugosc: " + str(len(loc)))
@@ -107,7 +107,7 @@ def createTile(name,x,y):
 
 
 
-def classifyTile(tileImg):
+def classifyTile(tileImg,x,y):
     path = "../res/readyTemplates/"
 
 
@@ -122,7 +122,7 @@ def classifyTile(tileImg):
     for name in otherTileNames:
         templateImage = Image.open(otherPath + name + ".png")
         if comparePictures(templateImage, tileImg):
-            return createTile(name,1,1)
+            return createTile(name,x,y)
 
 
 
@@ -134,20 +134,31 @@ def classifyGameTiles():
     #slice it into pieces
     list_of_images = slice(pic)
 
-    #classify one picture (undiscovered tile)
-    #0, 0
-    undiscoveredTileImg = list_of_images[0][0]
-    undiscoveredTile = classifyTile(undiscoveredTileImg)
-    print(undiscoveredTile)
+    array_of_tiles = []
+    for x in range(len(list_of_images)):
+        temp_tiles = []
+        for y in range(len(list_of_images[x])):
+            temp_tiles.append(classifyTile(list_of_images[x][y], x, y))
+        array_of_tiles.append(temp_tiles)
 
-    #classify senond picture (different tile)
-    #0,11
-    differentTileImg = list_of_images[0][11]
-    differentTile = classifyTile(differentTileImg)
-    print(differentTile)
+    return array_of_tiles
+
+
+    # #classify one picture (undiscovered tile)
+    # #0, 0
+    # undiscoveredTileImg = list_of_images[0][0]
+    # undiscoveredTile = classifyTile(undiscoveredTileImg)
+    # print(undiscoveredTile)
+    #
+    # #classify senond picture (different tile)
+    # #0,11
+    # differentTileImg = list_of_images[0][11]
+    # differentTile = classifyTile(differentTileImg)
+    # print(differentTile)
 
 
 if __name__ == '__main__':
     #firstCompareTest()
-    classifyGameTiles()
+    array_of_tiles = classifyGameTiles()
+    print("dupa")
 
