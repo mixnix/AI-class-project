@@ -50,25 +50,26 @@ def comparePictures(image1, image2):
 
     #print("Threshold tak jakby: " + str(res))
     for pt in zip(*loc[::-1]):
-        #print("p[0] " + str(pt[0]) + " pt[1] " + str(pt[1]))
+        print("p[0] " + str(pt[0]) + " pt[1] " + str(pt[1]))
         if(pt[0] == pt[1]):
             return True
     #print("dlugosc: " + str(len(loc)))
     return False
 
+def firstCompareTest():
 
-if __name__ == '__main__':
     time.sleep(2)
 
     #Take screenshot
-    pic = pyautogui.screenshot()
+    #pic = pyautogui.screenshot()
+    pic = Image.open("../res/2ndgoblin.png")
     #Show the screenshot
     #pic.show()
 
     list_of_images = slice(pic)
 
     #show first picture
-    list_of_images[14][14].show()  #goblin 2
+    list_of_images[3][10].show()  #goblin 2
 
     #prepare second picture
     img_with_goblin2 = Image.open("../res/2.png")
@@ -76,10 +77,25 @@ if __name__ == '__main__':
     #show sesond picture
     list_with_goblin2[1][10].show()
 
-    image1 = np.array(list_of_images[14][14])
+    image1 = np.array(list_of_images[3][10])
     image2 = np.array(list_with_goblin2[1][10])
 
     #result of comparison
     print("Are pictures the same?: " + str(comparePictures(image1,image2)))
 
+class Field:
+    def __init__(self, x, y):
+        self.positionX = x
+        self.positionY = y
+
+class DifferentField(Field):
+    def __str__(self):
+        return "different field"
+
+class Undiscovered(Field):
+    def __str__(self):
+        return "undiscovered field"
+
+if __name__ == '__main__':
+    firstCompareTest()
 
