@@ -41,11 +41,13 @@ def slice(img):
     return list_to_be_returned
 
 def comparePictures(image1, image2):
+    image1 = np.array(image1)
+    image2 = np.array(image2)
     img1_gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
     img2_gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 
     res = cv2.matchTemplate(img1_gray, img2_gray, cv2.TM_CCOEFF_NORMED)
-    threshold = 0.4
+    threshold = 0.8
     loc = np.where(res >= threshold)
 
     #print("Threshold tak jakby: " + str(res))
@@ -77,8 +79,8 @@ def firstCompareTest():
     #show sesond picture
     list_with_goblin2[1][10].show()
 
-    image1 = np.array(list_of_images[3][10])
-    image2 = np.array(list_with_goblin2[1][10])
+    image1 = list_of_images[3][10]
+    image2 = list_with_goblin2[1][10]
 
     #result of comparison
     print("Are pictures the same?: " + str(comparePictures(image1,image2)))
@@ -96,6 +98,42 @@ class Undiscovered(Field):
     def __str__(self):
         return "undiscovered field"
 
+
+def classifyTile(tileImg):
+    path = "../res/readyTemplates/"
+
+
+    #other category
+    otherPath = path + "Other/"
+    #undiscovered tile
+    undiscovered = Image.open(otherPath + "undiscovered.png")
+    if(comparePictures(undiscovered, tileImg)):
+        return Undiscovered(1,1)
+
+
+
+
+def classifyGameTiles():
+    #load picture
+    pic = Image.open("../res/2ndgoblin.png")
+
+    #slice it into pieces
+    list_of_images = slice(pic)
+
+    #classify one picture (undiscovered tile)
+    #0, 0
+    undiscoveredTileImg = list_of_images[0][0]
+    undiscoveredTile = classifyTile(undiscoveredTileImg)
+    print(undiscoveredTile)
+
+    #classify senond picture (different tile)
+    #0,11
+    differentTileImg = list_of_images[0][11]
+    differentTile = classifyTile(differentTileImg)
+    print(differentTile)
+
+
 if __name__ == '__main__':
-    firstCompareTest()
+    #firstCompareTest()
+    classifyGameTiles()
 
