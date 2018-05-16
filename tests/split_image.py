@@ -29,7 +29,7 @@ def long_slice(image_path, out_name, outdir, slice_size):
 # slices image in height and width, it will have slicesX slices in width and slicesY slices in height
 def slice(image_path, out_name, outdir, slicesX, slicesY):
     img = Image.open(image_path)
-    left = 259
+    left = 260
 
     #constants that in future should be generated automatically by detecting edges and calculating
     slice_sizeX = 50
@@ -45,7 +45,8 @@ def slice(image_path, out_name, outdir, slicesX, slicesY):
         for Y in range(slicesY):
             lower = upper + slice_sizeY
 
-            bbox = (left, upper, right, lower)
+            equalizer = 2
+            bbox = (left+equalizer, upper+equalizer, right+equalizer, lower+equalizer)
             working_slice = img.crop(bbox)
             upper += slice_sizeY
             working_slice.save(os.path.join(outdir, "../res/splitted_img/slice_" +
