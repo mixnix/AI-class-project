@@ -8,7 +8,7 @@ def slice(img):
     slicesX = 20
     slicesY = 20
 
-    left = 259
+    left = 260
 
     #constants that in future should be generated automatically by detecting edges and calculating
     slice_sizeX = 50
@@ -27,7 +27,9 @@ def slice(img):
         countY = 1
         for Y in range(slicesY):
             lower = upper + slice_sizeY
-            bbox = (left, upper, right, lower)
+
+            equalizer = 2
+            bbox = (left+equalizer, upper+equalizer, right+equalizer, lower+equalizer)
             working_slice = img.crop(bbox)
             upper += slice_sizeY
 
@@ -40,14 +42,15 @@ def slice(img):
         list_to_be_returned.append(temp_list)
     return list_to_be_returned
 
-def comparePictures(image1, image2):
-    image1 = np.array(image1)
-    image2 = np.array(image2)
-    img1_gray = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-    img2_gray = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+def comparePictures(image, template):
+    image = np.array(image)
+    template = np.array(template)
+    img1_gray = image #cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+    img2_gray = template#cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 
-    res = cv2.matchTemplate(img1_gray, img2_gray, cv2.TM_CCOEFF_NORMED)
-    threshold = 0.8
+
+    res = cv2.matchTemplate(img1_gray, img2_gray, cv2.TM_CCOEFF )
+    threshold = 0.9
     loc = np.where(res >= threshold)
 
     #print("Threshold tak jakby: " + str(res))
@@ -58,33 +61,6 @@ def comparePictures(image1, image2):
     #print("dlugosc: " + str(len(loc)))
     return False
 
-def firstCompareTest():
-
-    time.sleep(2)
-
-    #Take screenshot
-    #pic = pyautogui.screenshot()
-    pic = Image.open("../res/2ndgoblin.png")
-    #Show the screenshot
-    #pic.show()
-
-    list_of_images = slice(pic)
-
-    #show first picture
-    list_of_images[3][10].show()  #goblin 2
-
-    #prepare second picture
-    img_with_goblin2 = Image.open("../res/2.png")
-    list_with_goblin2 = slice(img_with_goblin2)
-    #show sesond picture
-    list_with_goblin2[1][10].show()
-
-    image1 = list_of_images[3][10]
-    image2 = list_with_goblin2[1][10]
-
-    #result of comparison
-    print("Are pictures the same?: " + str(comparePictures(image1,image2)))
-
 class Field:
     def __init__(self, x, y):
         self.positionX = x
@@ -92,16 +68,52 @@ class Field:
 
 class DifferentField(Field):
     def __str__(self):
-        return "different field"
+        return "d "
 
 class Undiscovered(Field):
     def __str__(self):
-        return "undiscovered field"
+        return "u "
+
+class Altar(Field):
+    def __str__(self):
+        return "a "
+
+class Empty(Field):
+    def __str__(self):
+        return "e "
+
+class Gold(Field):
+    def __str__(self):
+        return "g "
+
+class Hero(Field):
+    def __str__(self):
+        return "h "
+
+class HiddenMonster(Field):
+    def __str__(self):
+        return "hm "
+
+class Shop(Field):
+    def __str__(self):
+        return "a "
+
+class Wall(Field):
+    def __str__(self):
+        return "w "
 
 def createTile(name,x,y):
     tileProducer = {
         #todo: are those tiles, gonna be the same object??? with the same adress
         "undiscovered" : Undiscovered(x,y),
+        "altar" : Altar(x,y),
+        "empty": Empty(x, y),
+        "gold": Gold(x, y),
+        "hero": Hero(x, y),
+        "hidden_monster": HiddenMonster(x, y),
+        "shop": Shop(x, y),
+        "wall": Wall(x, y),
+
     }
     return tileProducer.get(name, DifferentField(x,y))
 
@@ -127,9 +139,11 @@ def classifyTile(tileImg,x,y):
 
 
 
+
 def classifyGameTiles():
     #load picture
     pic = Image.open("../res/2ndgoblin.png")
+    pic.show()
 
     #slice it into pieces
     list_of_images = slice(pic)
@@ -143,22 +157,27 @@ def classifyGameTiles():
 
     return array_of_tiles
 
+def testComparePictures():
+    gameBoard = Image.open("../res/initial_screen.png")
 
-    # #classify one picture (undiscovered tile)
-    # #0, 0
-    # undiscoveredTileImg = list_of_images[0][0]
-    # undiscoveredTile = classifyTile(undiscoveredTileImg)
-    # print(undiscoveredTile)
-    #
-    # #classify senond picture (different tile)
-    # #0,11
-    # differentTileImg = list_of_images[0][11]
-    # differentTile = classifyTile(differentTileImg)
-    # print(differentTile)
+    gameBoadPics = slice(gameBoard)
 
+    #picture of wall
+    wallPic = gameBoadPics[1][3]
+    #wallPic.show()
+
+    #template of empty field
+    undiscoveredTemplate = Image.open("../res/readyTemplates/Other/undiscovered.png")
+   # undiscoveredTemplate.show()
+
+    #template matching
+    print(comparePictures(wallPic, undiscoveredTemplate))
 
 if __name__ == '__main__':
-    #firstCompareTest()
-    array_of_tiles = classifyGameTiles()
-    print("dupa")
-
+    # #firstCompareTest()
+    # array_of_tiles = classifyGameTiles()
+    # for x in range(len(array_of_tiles)):
+    #     for y in range(len(array_of_tiles[x])):
+    #         print(array_of_tiles[y][x],end="")
+    #     print()
+    testComparePictures()
