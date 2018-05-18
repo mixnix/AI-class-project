@@ -8,11 +8,13 @@ def slice(img):
     slicesX = 20
     slicesY = 20
 
-    left = 260
+    left = 259 + 2
 
     #constants that in future should be generated automatically by detecting edges and calculating
-    slice_sizeX = 50
-    slice_sizeY = 50
+    slice_sizeX = 48
+    slice_sizeY = 48
+    plusMovementX = 2
+    plusMovementY = 2
 
     countX = 1
 
@@ -23,7 +25,7 @@ def slice(img):
 
         temp_list = []
 
-        upper = 30
+        upper = 30 + 2
         countY = 1
         for Y in range(slicesY):
             lower = upper + slice_sizeY
@@ -31,13 +33,13 @@ def slice(img):
             equalizer = 2
             bbox = (left+equalizer, upper+equalizer, right+equalizer, lower+equalizer)
             working_slice = img.crop(bbox)
-            upper += slice_sizeY
+            upper += slice_sizeY + plusMovementY
 
             temp_list.append(working_slice)
 
             countY += 1
 
-        left += slice_sizeX
+        left += slice_sizeX  + plusMovementX
         countX += 1
         list_to_be_returned.append(temp_list)
     return list_to_be_returned
@@ -45,8 +47,8 @@ def slice(img):
 def comparePictures(image, template):
     image = np.array(image)
     template = np.array(template)
-    img1_gray = image #cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-    img2_gray = template#cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+    img1_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    img2_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
 
 
     res = cv2.matchTemplate(img1_gray, img2_gray, cv2.TM_CCOEFF )
@@ -101,6 +103,10 @@ class Shop(Field):
 class Wall(Field):
     def __str__(self):
         return "w "
+
+class Monster(Field):
+    def __str__(self):
+        return "m "
 
 def createTile(name,x,y):
     tileProducer = {
@@ -158,26 +164,78 @@ def classifyGameTiles():
     return array_of_tiles
 
 def testComparePictures():
+    oOther = lambda name : Image.open("../res/readyTemplates/Other/" + str(name) + ".png")
+    templateDictionary = {
+        "altar" : oOther("altar"),
+        "empty" : oOther("empty"),
+        "gold" : oOther("gold"),
+        "hero" : oOther("hero"),
+        "hidden_monster" : oOther("hidden_monster"),
+        "shop" : oOther("shop"),
+        "undiscovered" : oOther("undiscovered"),
+        "wall" : oOther("wall")
+    }
+
+    # for key in templateDictionary:
+    #     templateDictionary.get(key).show()
+
     gameBoard = Image.open("../res/initial_screen.png")
 
     gameBoadPics = slice(gameBoard)
 
-    #picture of wall
+
+    #todo: check if all pics and templates are loaded properly (if I didnt make mistakes)
+    t = lambda x,y : gameBoadPics[x][y]
+    picsDictionary = {
+        "altar" : [t(12,0)],
+        "empty" : [t(2,0),t(2,2)],
+        "gold" : [t(4,17),t(6,18)],
+        "hero" : [t(6,2)],
+        "hidden_monster" : [t(16,8),t(16,14)],
+        "shop" : [t(2,1),t(8,6)],
+        "undiscovered" : [t(0,0),t(8,0),t(0,5),t(13,15)],
+        "wall" : [t(1,0),t(0,1),t(1,1)],
+    }
+
+    for key in picsDictionary:
+        for l in range(len(picsDictionary.get(key))):
+            picsDictionary.get(key)[l].show()
+
+
+    #todo: do all these tests, use assert to do this
+
+
+
+    # pic of empty 1 up
+    emptyPic = gameBoadPics[1][3]
+
+
+
     wallPic = gameBoadPics[1][3]
-    #wallPic.show()
+
+
 
     #template of empty field
     undiscoveredTemplate = Image.open("../res/readyTemplates/Other/undiscovered.png")
-   # undiscoveredTemplate.show()
+    # undiscoveredTemplate.show()
+
+
 
     #template matching
-    print(comparePictures(wallPic, undiscoveredTemplate))
+    assert(not comparePictures(wallPic, undiscoveredTemplate))
 
 if __name__ == '__main__':
-    # #firstCompareTest()
+    #firstly test if templates compared to picture is true, really many test cases
+    #figure out how to partially automate it, for example make image field in class and test
+    # if class is the same
+    testComparePictures()
+
+    # #final test if classifying whole board will work
     # array_of_tiles = classifyGameTiles()
     # for x in range(len(array_of_tiles)):
     #     for y in range(len(array_of_tiles[x])):
     #         print(array_of_tiles[y][x],end="")
     #     print()
-    testComparePictures()
+
+
+
