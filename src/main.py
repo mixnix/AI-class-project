@@ -1,4 +1,4 @@
-import pyautogui
+#import pyautogui
 import time
 from PIL import Image
 import cv2
@@ -51,8 +51,9 @@ def comparePictures(image, template):
     img2_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
 
 
-    res = cv2.matchTemplate(img1_gray, img2_gray, cv2.TM_CCOEFF )
-    threshold = 0.9
+    res = cv2.matchTemplate(img1_gray, img2_gray, cv2.TM_CCOEFF_NORMED )
+    threshold = 0.4
+    print(res)
     loc = np.where(res >= threshold)
 
     #print("Threshold tak jakby: " + str(res))
@@ -165,26 +166,25 @@ def classifyGameTiles():
 
 def testComparePictures():
     oOther = lambda name : Image.open("../res/readyTemplates/Other/" + str(name) + ".png")
-    templateDictionary = {
-        "altar" : oOther("altar"),
+    tempDict = {
+        #"altar" : oOther("altar"),
         "empty" : oOther("empty"),
-        "gold" : oOther("gold"),
-        "hero" : oOther("hero"),
-        "hidden_monster" : oOther("hidden_monster"),
-        "shop" : oOther("shop"),
-        "undiscovered" : oOther("undiscovered"),
-        "wall" : oOther("wall")
+        #"gold" : oOther("gold"),
+        #"hero" : oOther("hero"),
+        #"hidden_monster" : oOther("hidden_monster"),
+        #"shop" : oOther("shop"),
+        #"undiscovered" : oOther("undiscovered"),
+        #"wall" : oOther("wall")
     }
 
-    # for key in templateDictionary:
-    #     templateDictionary.get(key).show()
+    # for key in tempDict:
+    #     tempDict.get(key).show()
 
     gameBoard = Image.open("../res/initial_screen.png")
 
     gameBoadPics = slice(gameBoard)
 
 
-    #todo: check if all pics and templates are loaded properly (if I didnt make mistakes)
     t = lambda x,y : gameBoadPics[x][y]
     picsDictionary = {
         "altar" : [t(12,0)],
@@ -193,13 +193,27 @@ def testComparePictures():
         "hero" : [t(6,2)],
         "hidden_monster" : [t(16,8),t(16,14)],
         "shop" : [t(2,1),t(8,6)],
-        "undiscovered" : [t(0,0),t(8,0),t(0,5),t(13,15)],
+        #"undiscovered" : [t(0,0),t(8,0),t(0,5),t(13,15)],
         "wall" : [t(1,0),t(0,1),t(1,1)],
     }
 
-    for key in picsDictionary:
-        for l in range(len(picsDictionary.get(key))):
-            picsDictionary.get(key)[l].show()
+    # for key in picsDictionary:
+    #     for l in range(len(picsDictionary.get(key))):
+    #         picsDictionary.get(key)[l].show()
+
+    for picKey in picsDictionary:
+        for pic in picsDictionary.get(picKey):
+            for keyTemp in tempDict:
+                if(picKey == keyTemp):
+                    match = True
+                else:
+                    match = False
+                pic.show()
+                tempPic = tempDict.get(keyTemp)
+                tempPic.show()
+                comparison = comparePictures(pic, tempPic)
+                print(comparison)
+                assert comparison == match
 
 
     #todo: do all these tests, use assert to do this
