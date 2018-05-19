@@ -43,3 +43,5 @@ class Wall(Field):
 class Monster(Field):
     def __str__(self):
         return "m "
+
+

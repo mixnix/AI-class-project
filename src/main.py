@@ -3,47 +3,9 @@ import time
 from PIL import Image
 import cv2
 import numpy as np
-from .Fields import *
+from Fields import *
+from Utility import *
 
-def slice(img):
-    slicesX = 20
-    slicesY = 20
-
-    left = 259 + 2
-
-    #constants that in future should be generated automatically by detecting edges and calculating
-    slice_sizeX = 48
-    slice_sizeY = 48
-    plusMovementX = 2
-    plusMovementY = 2
-
-    countX = 1
-
-    list_to_be_returned = []
-
-    for X in range(slicesX):
-        right = left + slice_sizeX
-
-        temp_list = []
-
-        upper = 30 + 2
-        countY = 1
-        for Y in range(slicesY):
-            lower = upper + slice_sizeY
-
-            equalizer = 2
-            bbox = (left+equalizer, upper+equalizer, right+equalizer, lower+equalizer)
-            working_slice = img.crop(bbox)
-            upper += slice_sizeY + plusMovementY
-
-            temp_list.append(working_slice)
-
-            countY += 1
-
-        left += slice_sizeX  + plusMovementX
-        countX += 1
-        list_to_be_returned.append(temp_list)
-    return list_to_be_returned
 
 def comparePictures(image, template):
     image = np.array(image)
@@ -196,11 +158,12 @@ def testComparePictures():
     #template matching
     #assert(not comparePictures(wallPic, undiscoveredTemplate))
 
-if __name__ == '__main__':
+
+testComparePictures()
     #firstly test if templates compared to picture is true, really many test cases
     #figure out how to partially automate it, for example make image field in class and test
     # if class is the same
-    testComparePictures()
+
 
     # #final test if classifying whole board will work
     # array_of_tiles = classifyGameTiles()
