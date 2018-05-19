@@ -3,30 +3,11 @@ import time
 from PIL import Image
 import cv2
 import numpy as np
-from Fields import *
-from Utility import *
+from libs.Comparing import *
+from libs.Fields import *
+from libs.Utility import *
 
 
-def comparePictures(image, template):
-    image = np.array(image)
-    template = np.array(template)
-
-    img1_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
-
-
-    res = cv2.matchTemplate(img1_gray, template_gray, cv2.TM_CCOEFF_NORMED )
-    threshold = 0.4
-    print(res)
-    loc = np.where(res >= threshold)
-
-    #print("Threshold tak jakby: " + str(res))
-    for pt in zip(*loc[::-1]):
-        #print("p[0] " + str(pt[0]) + " pt[1] " + str(pt[1]))
-        if(pt[0] == pt[1]):
-            return True
-    #print("dlugosc: " + str(len(loc)))
-    return False
 
 
 def createTile(name,x,y):
@@ -136,30 +117,21 @@ def testComparePictures():
                 #assert comparison == match
 
 
-    #todo: do all these tests, use assert to do this
-
-
-
-    # pic of empty 1 up
-    emptyPic = gameBoadPics[1][3]
-
-
-
-    wallPic = gameBoadPics[1][3]
-
-
-
-    #template of empty field
-    undiscoveredTemplate = Image.open("../res/readyTemplates/Other/undiscovered.png")
-    # undiscoveredTemplate.show()
-
-
-
-    #template matching
-    #assert(not comparePictures(wallPic, undiscoveredTemplate))
+def testCreateFields():
+    pustePole =
 
 
 testComparePictures()
+testCreateFields()
+
+
+
+
+
+
+
+
+
     #firstly test if templates compared to picture is true, really many test cases
     #figure out how to partially automate it, for example make image field in class and test
     # if class is the same
