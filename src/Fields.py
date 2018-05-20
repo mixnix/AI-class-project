@@ -45,3 +45,17 @@ class Monster(Field):
         return "m "
 
 
+def createTile(name,x,y):
+    tileProducer = {
+        #todo: are those tiles, gonna be the same object??? with the same adress
+        "undiscovered" : Undiscovered(x,y),
+        "altar" : Altar(x,y),
+        "empty": Empty(x, y),
+        "gold": Gold(x, y),
+        "hero": Hero(x, y),
+        "hidden_monster": HiddenMonster(x, y),
+        "shop": Shop(x, y),
+        "wall": Wall(x, y),
+
+    }
+    return tileProducer.get(name, DifferentField(x,y))
