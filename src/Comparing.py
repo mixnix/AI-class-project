@@ -64,3 +64,16 @@ def comparePictures(image, template):
             return True
     #print("dlugosc: " + str(len(loc)))
     return False
+
+
+def comparePicturesRetThreshold(image, template):
+    image = np.array(image)
+    template = np.array(template)
+
+    img1_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+
+
+    res = cv2.matchTemplate(img1_gray, template_gray, cv2.TM_CCOEFF_NORMED )
+    threshold = 0.4
+    return res[0][0]
