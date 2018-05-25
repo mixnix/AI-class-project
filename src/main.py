@@ -6,7 +6,7 @@ import numpy as np
 from Comparing import *
 from Fields import *
 from Utility import *
-from Tests import *
+from Tests2 import *
 
 
 
