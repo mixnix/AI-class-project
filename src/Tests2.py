@@ -21,7 +21,7 @@ def loadDictionaries():
 
     tempDict = {
         "altar": oOther("altar", []),
-        "blood": oOther("blood", []),
+        #"blood": oOther("blood", []),
         #"bonusatk": oOther("bonusatk", ["bonushp", "bonusmp"]),
         #"bonushp": oOther("bonushp", ["bonusatk", "bonusmp"]),
         #"bonusmp": oOther("bonusmp", ["bonushp", "bonusatk"]),
@@ -210,7 +210,7 @@ def runTests():
     picsDictionary, tempDict = loadDictionaries()
     # testCreateFields()
 
-    testColor(picsDictionary,(238,54,36), 'red')  #(0,0,0) czarny kolor
+    testColor(picsDictionary,(237,18,18), 'bloody red')  #(0,0,0) czarny kolor
 
     #testColor(picsDictionary,(255,255,255), 'white')   #(255,255,255) bialy kolor
     # tempDict = findThresholds2(tempDict, picsDictionary)

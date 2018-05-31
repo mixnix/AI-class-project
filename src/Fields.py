@@ -7,7 +7,7 @@ class Field:
 
 class DifferentField(Field):
     def __str__(self):
-        return "d "
+        return "different field "
 
 class Spell(Field):
     def __init__(self, x, y, pic):
@@ -16,7 +16,7 @@ class Spell(Field):
         self.positionY = y
 
     def __str__(self):
-        return "sp "
+        return "spell "
 
 class Undiscovered(Field):
     def __init__(self, x, y, pic):
@@ -25,7 +25,7 @@ class Undiscovered(Field):
         self.positionY = y
 
     def __str__(self):
-        return "u "
+        return "undiscovered "
 
 class Bonus(Field):
     def __init__(self, x, y, pic):
@@ -34,7 +34,7 @@ class Bonus(Field):
         self.positionY = y
 
     def __str__(self):
-        return "bon "
+        return "bonus "
 
 class Monster(Field):
     def __init__(self, x, y, pic):
@@ -43,7 +43,7 @@ class Monster(Field):
         self.positionY = y
 
     def __str__(self):
-        return "m "
+        return "monster "
 
 class MeatMan(Monster):
     def __init__(self, x, y, pic):
@@ -52,36 +52,119 @@ class MeatMan(Monster):
         self.positionY = y
 
     def __str__(self):
-        return "m "
+        return "meatman "
 
+class Warlock(Monster):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
 
-class Altar(Field):
     def __str__(self):
-        return "a "
+        return "warlock "
 
-class Empty(Field):
-    def __str__(self):
-        return "e "
 
-class Gold(Field):
-    def __str__(self):
-        return "g "
+class Zombie(Monster):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
 
-class Hero(Field):
     def __str__(self):
-        return "h "
+        return "zombie "
 
-class HiddenMonster(Field):
-    def __str__(self):
-        return "hm "
+class Goblin(Monster):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
 
-class Shop(Field):
     def __str__(self):
-        return "a "
+        return "goblin "
 
-class Wall(Field):
+
+class altar(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
     def __str__(self):
-        return "w "
+        return "altar "
+
+
+class blood(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
+    def __str__(self):
+        return "blood "
+
+class empty(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
+    def __str__(self):
+        return "empty "
+
+class gold(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
+    def __str__(self):
+        return "gold "
+
+class hero(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
+    def __str__(self):
+        return "hero "
+
+class hidden_monster(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
+    def __str__(self):
+        return "hidden monster "
+
+class hppotion(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
+    def __str__(self):
+        return "hppotion "
+
+
+class shop(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
+    def __str__(self):
+        return "shop "
+
+class wall(Field):
+    def __init__(self, x, y, pic):
+        self.pic = pic
+        self.positionX = x
+        self.positionY = y
+
+    def __str__(self):
+        return "wall "
 
 
 
