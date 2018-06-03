@@ -60,27 +60,27 @@ def loadDictionaries():
 
     }
     gameBoard1 = Image.open("../res/initial_screen.png")
-    gameBoadPics1 = slice(gameBoard1)
+    gameBoadPics1 = sliceImage(gameBoard1)
     t = lambda x, y: gameBoadPics1[x][y]
 
     gameBoard2 = Image.open("../res/2.png")
-    gameBoadPics2 = slice(gameBoard2)
+    gameBoadPics2 = sliceImage(gameBoard2)
     u = lambda x, y: gameBoadPics2[x][y]
 
     gameBoard3 = Image.open("../res/full_print_screen.png")
-    gameBoadPics3 = slice(gameBoard3)
+    gameBoadPics3 = sliceImage(gameBoard3)
     v = lambda x, y: gameBoadPics3[x][y]
 
     gameBoard4 = Image.open("../res/summonmonster.png")
-    gameBoadPics4 = slice(gameBoard4)
+    gameBoadPics4 = sliceImage(gameBoard4)
     uu = lambda x, y: gameBoadPics4[x][y]
 
     gameBoard5 = Image.open("../res/lemmisee.png")
-    gameBoadPics5 = slice(gameBoard5)
+    gameBoadPics5 = sliceImage(gameBoard5)
     uv = lambda x, y: gameBoadPics5[x][y]
 
     gameBoard6 = Image.open("../res/destroywall.png")
-    gameBoadPics6 = slice(gameBoard6)
+    gameBoadPics6 = sliceImage(gameBoard6)
     ut = lambda x, y: gameBoadPics6[x][y]
 
     # 11, 14
@@ -117,7 +117,8 @@ def loadDictionaries():
     }
     return picsDictionary, tempDict
 
-def slice(img):
+def sliceImage(img):
+    images_array = []
     slicesX = 20
     slicesY = 20
 
@@ -131,7 +132,6 @@ def slice(img):
 
     countX = 1
 
-    list_to_be_returned = []
 
     for X in range(slicesX):
         right = left + slice_sizeX
@@ -154,8 +154,8 @@ def slice(img):
 
         left += slice_sizeX  + plusMovementX
         countX += 1
-        list_to_be_returned.append(temp_list)
-    return list_to_be_returned
+        images_array.append(temp_list)
+    return images_array
 
 def comparePicturesRetThreshold(image, template):
     image = np.array(image)
@@ -166,7 +166,6 @@ def comparePicturesRetThreshold(image, template):
 
 
     res = cv2.matchTemplate(img1_gray, template_gray, cv2.TM_CCOEFF_NORMED )
-    threshold = 0.4
     return res[0][0]
 
 def findThresholds2(tempDict, picsDictionary):
@@ -189,7 +188,7 @@ def findThresholds2(tempDict, picsDictionary):
                 if(picKey == keyTemp):
                     if(similarity < minRightThreshold):
                         minRightThreshold = similarity
-                elif(not tempObject.friendClasses.__contains__(picKey)):  #jak sprawdzic zawieranie sie w tablicy
+                elif(not tempObject.friendClasses.__contains__(picKey)):
                     if(similarity > maxWrongThreshold):
                         maxWrongThreshold = similarity
         tempDict.get(keyTemp).threshold = minRightThreshold
@@ -197,10 +196,6 @@ def findThresholds2(tempDict, picsDictionary):
             absoluteMinRightThreshold = minRightThreshold
         if(maxWrongThreshold > absoluteMaxWrongThreshold):
             absoluteMaxWrongThreshold = maxWrongThreshold
-        # print("Key: " + keyTemp)
-        # print("minimum right threshold = " + str(minRightThreshold))
-        # print("maximum wrong threshold = " + str(maxWrongThreshold))
-        # print()
         if(minRightThreshold < maxWrongThreshold):
             varThresholdDetectionPossible = False
 
@@ -224,10 +219,7 @@ def compareWithThreshold(image, template, thresholdArg):
     #print(res)
     loc = np.where(res >= threshold)
 
-    #print("Threshold tak jakby: " + str(res))
     for pt in zip(*loc[::-1]):
-        #print("p[0] " + str(pt[0]) + " pt[1] " + str(pt[1]))
         if(pt[0] == pt[1]):
             return True
-    #print("dlugosc: " + str(len(loc)))
     return False

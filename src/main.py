@@ -22,7 +22,7 @@ tempDict = findThresholds2(tempDict, picsDictionary)
 print_screen = pyautogui.screenshot()
 
 #cutting printscreen into smaller pictures, one small picture contains one possible in game action
-image_array = slicePrintScreen(print_screen)
+image_array = sliceImage(print_screen)
 
 #creates class that specifies what kind of field that is, position x and y of that field in game and picture of that field
 labeled_imaged_array = classify_images(image_array, tempDict)
