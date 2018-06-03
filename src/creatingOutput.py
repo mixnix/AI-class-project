@@ -21,3 +21,6 @@ def make_move(field):
     pyautogui.moveTo(x,y)
     time.sleep(1)
     pyautogui.click(x,y)
+
+def isWon():
+    return False

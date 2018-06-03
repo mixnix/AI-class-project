@@ -18,17 +18,19 @@ picsDictionary, tempDict = loadDictionaries()
 # using match template metcho
 tempDict = findThresholds2(tempDict, picsDictionary)
 
-#taking printscreen
-print_screen = pyautogui.screenshot()
+while not isWon():
+    # taking printscreen
+    print_screen = pyautogui.screenshot()
 
-#cutting printscreen into smaller pictures, one small picture contains one possible in game action
-image_array = sliceImage(print_screen)
+    # cutting printscreen into smaller pictures, one small picture contains one possible in game action
+    image_array = sliceImage(print_screen)
 
-#creates class that specifies what kind of field that is, position x and y of that field in game and picture of that field
-labeled_imaged_array = classify_images(image_array, tempDict)
+    # creates class that specifies what kind of field that is, position x and y of that field in game and picture of that field
+    labeled_imaged_array = classify_images(image_array, tempDict)
 
-#method that picks which field is the best move in game
-field = pick_move(labeled_imaged_array)
+    # method that picks which field is the best move in game
+    field = pick_move(labeled_imaged_array)
 
-#clicks picked field
-make_move(field)
+    # clicks picked field
+    make_move(field)
+
