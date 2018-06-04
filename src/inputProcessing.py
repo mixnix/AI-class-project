@@ -2,6 +2,12 @@ import copy
 from PIL import Image
 from Fields import *
 from gettingValues import compareWithThreshold
+from PIL import ImageGrab
+import pyautogui
+import time
+
+
+
 
 def classify_images(image_array, tempDict):
     labeled_imaged_array = []
@@ -11,7 +17,101 @@ def classify_images(image_array, tempDict):
     testWithBloodyRed(image_array,labeled_imaged_array)
     templateClassifying(image_array,labeled_imaged_array, tempDict)
 
+    initiatingMonsterLevels(labeled_imaged_array)
+
     return labeled_imaged_array
+
+
+def initiatingMonsterLevels(labeled_imaged_array):
+    bbox = (0, 24, 24, 48)
+
+    monsterImages = []
+    loadMonster = lambda lvl, monsterName : Image.open("../res/readyTemplates/Monsters/" + monsterName + "/" + str(lvl) + ".png")
+
+
+    for lvl in range(1,11):
+        monsterImages.append(loadMonster(lvl, "Goblin"))
+        monsterImages.append(loadMonster(lvl, "MeatMan"))
+        monsterImages.append(loadMonster(lvl, "Warlock"))
+        monsterImages.append(loadMonster(lvl, "Zombie"))
+
+    monsterLvlImage = []
+    for img in monsterImages:
+        working_slice = img.crop(bbox)
+        monsterLvlImage.append(working_slice)
+
+    for field in labeled_imaged_array:
+        if type(field).__name__ in ["MeatMan", "Goblin", "Warlock", "Zombie"]:
+            if (testGreenLevels(field.pic) > 20):
+                classifyLevel(field, 'green')
+                print("zielona kategoria")
+            elif (testYellowLevels(field.pic) > 20):
+                classifyLevel(field, 'green')
+                print("zolta kategoria")
+            elif (testOrangeLevels(field.pic) > 5):
+                print("orange category")
+            else:
+                print("red category")
+
+
+
+
+    #type(field).__name__ == "Warlock":
+    print("test stop")
+
+def classifyLevel(field, category):
+    #enlarge picture
+    moveMouse(field)
+    print("test classifying level, move mouse")
+
+def moveMouse(field):
+    x = 259 + (field.positionX + 1) * 48
+    y = 10 + (field.positionY + 1) * 48
+
+    pyautogui.moveTo(x, y)
+
+
+
+def testGreenLevels(img):
+    return countColorPixels(img,(0,100,0),(0,255,0))
+
+def testYellowLevels(img):
+    count = 0
+    for pixel in img.getdata():
+        if pixel[2] == 0 and pixel[0] == pixel[1] and pixel[0] > 30:
+            count += 1
+
+    return count
+
+
+def testOrangeLevels(img):
+    count = 0
+    for pixel in img.getdata():
+        if pixel[2] == 0 and pixel[0] == 2*pixel[1] and pixel[0] > 130:
+            count += 1
+
+    return count
+
+def testRedLevels(img):
+    return countColorPixels(img,(100,0,0),(255,0,0))
+
+
+
+
+def countColorPixels(img, color):
+    count = 0
+    for pixel in img.getdata():
+        if pixel == color:
+            count += 1
+    return count
+
+def countColorPixels(img, colorMin, colorMax):
+    count = 0
+    for pixel in img.getdata():
+        if pixel > colorMin and pixel < colorMax:
+            count += 1
+    return count
+
 
 def templateClassifying(image_array,labeled_array, templateDictionary):
     image_array_copy = copy.deepcopy(image_array)
