@@ -6,7 +6,8 @@ im2 = Image.open('Test2.jpg')
 im3 = Image.open('Test3.jpg')
 images = [im1,im2,im3]
 
-widths, heights = zip(*(i.size for i in images))
+a =  (i.size for i in images)
+widths, heights = zip(*(a))
 
 total_width = sum(widths)
 max_height = max(heights)
