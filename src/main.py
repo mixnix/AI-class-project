@@ -22,6 +22,9 @@ while not isWon():
     # taking printscreen
     print_screen = pyautogui.screenshot()
 
+    #pokaz printscreena
+    print_screen.show()
+
     # cutting printscreen into smaller pictures, one small picture contains one possible in game action
     image_array = sliceImage(print_screen)
 
@@ -34,3 +37,7 @@ while not isWon():
     # clicks picked field
     make_move(field)
 
+def show(labeled_imaged_array):
+    for row in labeled_imaged_array:
+        for picture in row:
+            picture.show()

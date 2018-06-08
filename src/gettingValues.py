@@ -223,3 +223,21 @@ def compareWithThreshold(image, template, thresholdArg):
         if(pt[0] == pt[1]):
             return True
     return False
+
+def compareWithThreshold2(image, template, thresholdArg):
+    image = np.array(image)
+    template = np.array(template)
+
+    img1_gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    template_gray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
+
+
+    res = cv2.matchTemplate(img1_gray, template_gray, cv2.TM_CCOEFF_NORMED )
+    threshold = thresholdArg
+    #print(res)
+    loc = np.where(res >= threshold)
+
+    for pt in zip(*loc[::-1]):
+        if(pt[0] == pt[0] and pt[1] == pt[1]):
+            return True
+    return False
