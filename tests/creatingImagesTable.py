@@ -29,8 +29,7 @@ def test(imageTable):
                 max_height = img.size[1]
         y_offset += max_height
 
-    new_im.show()
-    new_im.save('test.jpg')
+    return new_im
 
 if __name__ == "__main__":
     im1 = Image.open('Test1.jpg')
