@@ -16,7 +16,7 @@ def wydrukujTabliceStringow(tablicaStringow):
     img.show()
 
 if __name__ == "__main__":
-    tablicaStringow = [["Und","Und","Und"],
-                       ["Und", "Hero", "Undi"],
+    tablicaStringow = [["Und", "Und", "Und"],
+                       ["Und", "Hero", "Und"],
                        ["Und", "Und", "Und"]]
     wydrukujTabliceStringow(tablicaStringow)
