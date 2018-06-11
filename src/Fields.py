@@ -41,6 +41,7 @@ class Monster(Field):
         self.pic = pic
         self.positionX = x
         self.positionY = y
+        self.level = -1
 
     def __str__(self):
         return "monster "
@@ -50,6 +51,7 @@ class MeatMan(Monster):
         self.pic = pic
         self.positionX = x
         self.positionY = y
+        self.level = -1
 
     def __str__(self):
         return "meatman "
@@ -59,6 +61,7 @@ class Warlock(Monster):
         self.pic = pic
         self.positionX = x
         self.positionY = y
+        self.level = -1
 
     def __str__(self):
         return "warlock "
@@ -69,6 +72,7 @@ class Zombie(Monster):
         self.pic = pic
         self.positionX = x
         self.positionY = y
+        self.level = -1
 
     def __str__(self):
         return "zombie "
@@ -78,6 +82,7 @@ class Goblin(Monster):
         self.pic = pic
         self.positionX = x
         self.positionY = y
+        self.level = -1
 
     def __str__(self):
         return "goblin "

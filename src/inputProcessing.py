@@ -45,18 +45,20 @@ def initiatingMonsterLevels(labeled_imaged_array):
             monsterLvl = 0
             if (testGreenLevels(field.pic) > 20):
                 monsterLvl = classifyLevel(field, 'green')
-                print("zielona kategoria")
+                #print("zielona kategoria")
             elif (testYellowLevels(field.pic) > 20):
                 monsterLvl = classifyLevel(field, 'yellow')
-                print("zolta kategoria")
+                #print("zolta kategoria")
             elif (testOrangeLevels(field.pic) > 5):
                 monsterLvl = classifyLevel(field, 'orange')
-                print("orange category")
+                #print("orange category")
             else:
-                print("red category")
+                #print("red category")
                 monsterLvl = 10
             #field.pic.show()
-            print("stop after classifying level of one monster")
+            #print("stop after classifying level of one monster")
+            field.level = monsterLvl
+
 
 
 
