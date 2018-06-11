@@ -99,6 +99,19 @@ def toMonsterArray(labeled_imaged_array):
 
     return sortedMonsterArray
 
+def wydrukujTablicePotworow(monsterArray):
+    img = Image.new('RGB', (1800, 1000))
+    d = ImageDraw.Draw(img)
+
+    offset_Y = 0
+    for row in monsterArray:
+        offset_X = 0
+        for monster in row:
+            d.text((offset_X, offset_Y), str(monster)+str(monster.level), fill=(255, 0, 0))
+            offset_X += 50
+        offset_Y += 50
+
+    img.show()
 
 
 
@@ -135,7 +148,7 @@ while not isWon():
     #wydrukujTabliceStringow(stringArray)
 
     monsterArray = toMonsterArray(labeled_imaged_array)
-    #wydrukujTablicePotworow(monsterArray)
+    wydrukujTablicePotworow(monsterArray)
 
 
 
