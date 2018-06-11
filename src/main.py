@@ -114,6 +114,28 @@ def wydrukujTablicePotworow(monsterArray):
     img.show()
 
 
+class Player:
+    def __init__(self):
+        self.baseDmg = 5
+        self.bonusDmg = 0
+
+        self.maxHp = 10
+        self.currentHp = self.maxHp
+
+        self.maxMana = 10
+        self.currentMana = self.maxMana
+
+        self.level = 1
+        self.maxXp = self.level * 5
+        self.currentXp = 0
+
+    def updateStatistics(self):
+        #hopefully this one wont be needed if I just keep all the bonuses as I receive them
+        print("here goes alghoritm that reads statistics from screen")
+
+    def __str__(self):
+        return "klasa gracza trzymajaca nasze statystyki "
+
 
 
 
