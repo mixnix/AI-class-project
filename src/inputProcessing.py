@@ -228,7 +228,6 @@ def testWithWhite(image_array,labeled_array):
             for pixel in pic.getdata():
                 if pixel == (255,255,255):
                     white += 1
-        #tu testuj czy jest zakleciem
             if white > 100:
                 labeled_array.append(Bonus(x,y,pic))
                 image_array[x][y] = filling_image
@@ -254,7 +253,6 @@ def testWithRed(image_array,labeled_array):
             for pixel in pic.getdata():
                 if pixel == (238,54,36):
                     red += 1
-        #tu testuj czy jest zakleciem
             if red > 80:
                 labeled_array.append(MeatMan(x,y,pic))
                 image_array[x][y] = filling_image
@@ -279,7 +277,6 @@ def testWithBloodyRed(image_array,labeled_array):
             for pixel in pic.getdata():
                 if pixel == (237,18,18):
                     red += 1
-        #tu testuj czy jest zakleciem
             if red > 150:
                 labeled_array.append(blood(x,y,pic))
                 image_array[x][y] = filling_image

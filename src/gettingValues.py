@@ -122,7 +122,7 @@ def sliceImage(img):
     slicesX = 20
     slicesY = 20
 
-    left = 259 + 2
+    left = 259
 
     #constants that in future should be generated automatically by detecting edges and calculating
     slice_sizeX = 48
@@ -138,7 +138,7 @@ def sliceImage(img):
 
         temp_list = []
 
-        upper = 30 + 2
+        upper = 30
         countY = 1
         for Y in range(slicesY):
             lower = upper + slice_sizeY
@@ -177,7 +177,7 @@ def findThresholds2(tempDict, picsDictionary):
     absoluteMinRightThreshold = 1
     absoluteMaxWrongThreshold = 0
     for keyTemp in tempDict:
-        minRightThreshold = 1
+        minRightThreshold = 0.6
         maxWrongThreshold = 0
         for picKey in picsDictionary:
             for pic in picsDictionary.get(picKey):

@@ -121,6 +121,7 @@ while not isWon():
     stringArray = toStringArray(labeled_imaged_array)
     wydrukujTabliceStringow(stringArray)
 
+
     # method that picks which field is the best move in game
     field = pick_move(labeled_imaged_array)
 
