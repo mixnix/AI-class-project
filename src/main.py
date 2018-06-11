@@ -85,6 +85,19 @@ def toStringArray(labeled_imaged_array):
 
     return finalStringArray
 
+def toMonsterArray(labeled_imaged_array):
+    monsterArray = [[] for i in range(20)]
+    for obiekt in labeled_imaged_array:
+        name = type(obiekt).__name__
+        if(name in ['MeatMan','Goblin','Zombie','Warlock']):
+            monsterArray[obiekt.positionY].append(obiekt)
+
+    sortedMonsterArray = []
+    for row in monsterArray:
+        sorted_by_x = sorted(row, key=lambda x: x.positionX)
+        sortedMonsterArray.append(sorted_by_x)
+
+    return sortedMonsterArray
 
 
 
@@ -119,7 +132,11 @@ while not isWon():
     # creates class that specifies what kind of field that is, position x and y of that field in game and picture of that field
     labeled_imaged_array = classify_images(image_array, tempDict)
     stringArray = toStringArray(labeled_imaged_array)
-    wydrukujTabliceStringow(stringArray)
+    #wydrukujTabliceStringow(stringArray)
+
+    monsterArray = toMonsterArray(labeled_imaged_array)
+    #wydrukujTablicePotworow(monsterArray)
+
 
 
     # method that picks which field is the best move in game
