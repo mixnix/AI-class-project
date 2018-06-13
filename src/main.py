@@ -2,6 +2,7 @@ import time
 import pyautogui
 from PIL import Image, ImageDraw
 
+
 from gettingValues import *
 from inputProcessing import *
 from creatingOutput import *
@@ -129,6 +130,11 @@ class Player:
         self.maxXp = self.level * 5
         self.currentXp = 0
 
+        self.currentMonster = None
+        self.counter = 0
+
+        self.healCounter = 4
+
     def updateStatistics(self):
         #hopefully this one wont be needed if I just keep all the bonuses as I receive them
         print("here goes alghoritm that reads statistics from screen")
@@ -148,6 +154,7 @@ picsDictionary, tempDict = loadDictionaries()
 # comparing templates with example pictures to check if its possible to differentiate pictures into many different classes
 # using match template metcho
 tempDict = findThresholds2(tempDict, picsDictionary)
+player = Player()
 
 while not isWon():
     # taking printscreen
@@ -170,15 +177,16 @@ while not isWon():
     #wydrukujTabliceStringow(stringArray)
 
     monsterArray = toMonsterArray(labeled_imaged_array)
-    wydrukujTablicePotworow(monsterArray)
+    #wydrukujTablicePotworow(monsterArray)
 
 
 
     # method that picks which field is the best move in game
-    field = pick_move(labeled_imaged_array)
+    field = pick_move(labeled_imaged_array,player)
 
+    time.sleep(2)
     # clicks picked field
     make_move(field)
 
-    sleep(5)
+    time.sleep(3)
 

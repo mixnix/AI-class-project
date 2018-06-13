@@ -4,6 +4,7 @@ class Field:
         self.pic = pic
         self.positionX = x
         self.positionY = y
+        self.level = -2
 
 class DifferentField(Field):
     def __str__(self):
@@ -43,6 +44,9 @@ class Monster(Field):
         self.positionY = y
         self.level = -1
 
+    def updateLevel(self,lvl):
+        self.level = lvl
+
     def __str__(self):
         return "monster "
 
@@ -53,6 +57,9 @@ class MeatMan(Monster):
         self.positionY = y
         self.level = -1
 
+    def updateLevel(self,lvl):
+        self.level = lvl
+
     def __str__(self):
         return "meatman "
 
@@ -62,6 +69,9 @@ class Warlock(Monster):
         self.positionX = x
         self.positionY = y
         self.level = -1
+
+    def updateLevel(self,lvl):
+        self.level = lvl
 
     def __str__(self):
         return "warlock "
@@ -74,6 +84,9 @@ class Zombie(Monster):
         self.positionY = y
         self.level = -1
 
+    def updateLevel(self,lvl):
+        self.level = lvl
+
     def __str__(self):
         return "zombie "
 
@@ -83,6 +96,9 @@ class Goblin(Monster):
         self.positionX = x
         self.positionY = y
         self.level = -1
+
+    def updateLevel(self,lvl):
+        self.level = lvl
 
     def __str__(self):
         return "goblin "
